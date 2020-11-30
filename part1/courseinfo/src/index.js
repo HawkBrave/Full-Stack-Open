@@ -1,20 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import _ from 'lodash'
 
 const Part = props => (
-  <>
-    <p>
-      {props.name} {props.exercise}
-    </p>
-  </>
+  <p>
+    {props.name} {props.exercise}
+  </p>
 )
 
 const Content = props => {
+  let parts = _.zip(props.names, props.exercises).map(val => (
+    <Part name={val[0]} exercise={val[1]} />
+  ));
   return (
     <div>
-      <Part name={props.names[0]} exercise={props.exercises[0]} />
-      <Part name={props.names[1]} exercise={props.exercises[1]} />
-      <Part name={props.names[2]} exercise={props.exercises[2]} />
+      {parts}
     </div>
   );
 };
