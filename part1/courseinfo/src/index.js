@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import _, { set } from 'lodash'
 
-const Part = props => (
+const Part = ({name, exercise}) => (
   <p>
-    {props.name} {props.exercise}
+    {name} {exercise}
   </p>
 )
 
@@ -20,22 +20,31 @@ const Content = ({names, exercises}) => {
   );
 }
 
-const Total = props => (
+const Total = ({total}) => (
   <div>
-    <p>Number of exercises {props.total}</p>
+    <p>Number of exercises {total}</p>
   </div>
 );
 
-const Button = props => (
-  <button className="button" id={props.id} onClick={props.handleClick}>
-    {props.text}
+const Button = ({id, handleClick, text}) => (
+  <button className="button" id={id} onClick={handleClick}>
+    {text}
   </button>
 )
 
-const Display = props => <h3>{props.counter}</h3>
+const Display = ({counter, allClicks}) => {
+  let clicks = "none";
+  return (
+    <div>
+      <h3>Counter: {counter}</h3>
+      <p>All clicks made: {allClicks.length > 0 ? allClicks : clicks}</p>
+    </div>
+  );
+}
 
 const App = () => {
   const [counter, setCounter] = useState(0);
+  const [allClicks, setAll] = useState([]);
 
   const course = 'Half Stack application development';
   const part1 = 'Fundamentals of React';
@@ -45,19 +54,28 @@ const App = () => {
   const part3 = 'State of a component';
   const exercises3 = 14;
 
-  const inc = () => setCounter(counter + 1)
-  const decr = () => setCounter(counter > 0 ? counter - 1 : 0)
-  const setzero = () => setCounter(0)
+  const incr = () => {
+    setAll(allClicks.concat('inc '));
+    setCounter(counter + 1);
+  }
+  const decr = () => {
+    setAll(allClicks.concat('decr '));
+    setCounter(counter > 0 ? counter - 1 : 0);
+  }
+  const setzero = () => {
+    setAll([]);
+    setCounter(0);
+  }
 
   return (
     <div>
       <h1>{course}</h1>
-      <Display counter={counter}/>
+      <Display counter={counter} allClicks={allClicks}/>
       <Content names={[part1, part2, part3]} exercises={[exercises1, exercises2, exercises3]}/>
       <Total total={exercises1 + exercises2 + exercises3}/>
       <div id="wrapper">
         <Button 
-          handleClick={inc}
+          handleClick={incr}
           id={"incr"}
           text={"increment counter"}
         />
