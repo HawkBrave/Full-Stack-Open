@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
-import _ from 'lodash'
+import './index.css'
+import _, { set } from 'lodash'
 
 const Part = props => (
   <p>
@@ -26,7 +27,7 @@ const Total = props => (
 );
 
 const Button = props => (
-  <button onClick={props.handleClick}>
+  <button className="button" id={props.id} onClick={props.handleClick}>
     {props.text}
   </button>
 )
@@ -45,6 +46,8 @@ const App = () => {
   const exercises3 = 14;
 
   const inc = () => setCounter(counter + 1)
+  const decr = () => setCounter(counter > 0 ? counter - 1 : 0)
+  const setzero = () => setCounter(0)
 
   return (
     <div>
@@ -52,10 +55,21 @@ const App = () => {
       <Display counter={counter}/>
       <Content names={[part1, part2, part3]} exercises={[exercises1, exercises2, exercises3]}/>
       <Total total={exercises1 + exercises2 + exercises3}/>
-      <Button 
-        handleClick={inc}
-        text={"increment counter"}
-      />
+      <div id="wrapper">
+        <Button 
+          handleClick={inc}
+          id={"incr"}
+          text={"increment counter"}
+        />
+        <Button 
+          handleClick={decr}
+          text={"decrement counter"}
+        />
+        <Button 
+          handleClick={setzero}
+          text={"set to zero"}
+        />
+      </div>
     </div>
   )
 }
