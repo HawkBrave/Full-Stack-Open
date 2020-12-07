@@ -42,6 +42,12 @@ const Display = ({counter, allClicks}) => {
   );
 }
 
+const Wrapper = ({children}) => (
+  <div className="wrapper">
+    {children}
+  </div>
+)
+
 const App = () => {
   const [counter, setCounter] = useState(0);
   const [allClicks, setAll] = useState([]);
@@ -73,7 +79,7 @@ const App = () => {
       <Display counter={counter} allClicks={allClicks}/>
       <Content names={[part1, part2, part3]} exercises={[exercises1, exercises2, exercises3]}/>
       <Total total={exercises1 + exercises2 + exercises3}/>
-      <div id="wrapper">
+      <Wrapper>
         <Button 
           handleClick={incr}
           id={"incr"}
@@ -87,7 +93,7 @@ const App = () => {
           handleClick={setzero}
           text={"set to zero"}
         />
-      </div>
+      </Wrapper>
     </div>
   )
 }
