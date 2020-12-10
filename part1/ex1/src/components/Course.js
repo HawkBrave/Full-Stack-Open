@@ -22,16 +22,22 @@ const Content = ({parts}) => {
 
 const Total = ({parts}) => (
   <div>
-    <p>Number of exercises {parts.reduce((acc, part) => acc + part.exercises, 0)}</p>
+    <p><b>Total number of exercises {parts.reduce((acc, part) => acc + part.exercises, 0)}</b></p>
   </div>
 );
 
-const Course = ({course}) => {
+const Course = ({courses}) => {
   return (
     <div>
-      <Header course={course.name}/>
-      <Content parts={course.parts}/>
-      <Total parts={course.parts}/>
+      {
+        courses.map(course => (
+          <div>
+            <Header course={course.name}/>
+            <Content parts={course.parts}/>
+            <Total parts={course.parts}/>
+          </div>
+        ))
+      }
     </div>
   );
 }
