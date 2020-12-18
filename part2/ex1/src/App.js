@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import Note from './components/Note';
 import noteService from './services/notes';
 
@@ -55,6 +54,10 @@ const App = () => {
       .update(id, changedNote)
       .then(data => {
         setNotes(notes.map(n => n.id === id ? data : n));
+      })
+      .catch(err => {
+        alert(`the note '${note.content}' was already deleted from server`);
+        setNotes(notes.filter(n => n.id !== id));
       });
   }
   
