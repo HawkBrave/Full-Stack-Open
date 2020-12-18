@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
-
-const Contact = ({ person }) => {
-  return (
-    <li>
-      {person.name} {person.number}
-    </li>
-  );
-}
-
+import Filter from './components/Filter';
+import Persons from './components/Persons';
+import PersonForm from './components/PersonForm';
 
 function App() {
   const [ persons, setPersons ] = useState([
@@ -20,59 +14,34 @@ function App() {
   const [ newNumber, setNewNumber ] = useState('');
   const [ search, setSearch ] = useState('');
 
-  const handleInputChange = (func) => (event) => {
+  const handleChange = (func) => (event) => {
     func(event.target.value);
-  }
-
-  const searchResults = () => {
-    if (search === "") {
-      return persons.map(p => <Contact key={p.id} person={p}/>)
-    } else {
-      return persons.filter(p => p.name.includes(search)).map(p => <Contact key={p.id} person={p}/>);
-    }
-  }
-
-  const addPerson = (event) => {
-    event.preventDefault();
-    const newPerson = {
-      name: newName,
-      number: newNumber
-    };
-    if (persons.includes(...persons.filter(p => p.name === newPerson.name))) {
-      alert('no');
-    } else {
-      setPersons(persons.concat(newPerson))
-    }
-    setNewName('');
-    setNewNumber('');
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        filter shown with <input value={search} onChange={handleInputChange(setSearch)}/>
-      </div>
+      <Filter 
+        handleChange={handleChange}
+        setSearch={setSearch}
+      /> 
       <h2>add a new</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handleInputChange(setNewName)}/>
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleInputChange(setNewNumber)}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm 
+        handleChange={handleChange}
+        persons={persons} 
+        setPersons={setPersons} 
+        newName={newName}
+        setNewName={setNewName}
+        newNumber={newNumber}
+        setNewNumber={setNewNumber}
+      /> 
       <h2>Numbers</h2>
-      <ul>
-        {
-          searchResults()
-        }
-      </ul>
+      <Persons 
+        persons={persons} 
+        search={search}
+      /> 
     </div>
-  )
+  );
 }
 
 export default App;
