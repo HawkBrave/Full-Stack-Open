@@ -33,8 +33,15 @@ function App() {
       name: newName,
       number: newNumber
     };
-    if (persons.includes(...persons.filter(p => p.name === newPerson.name))) {
-      alert('You cannot add the same person.');
+    const [check] = persons.filter(p => p.name.toLowerCase() === newPerson.name.toLowerCase());
+    if (persons.includes(check)) {
+      if (window.confirm("There's already a person with the same name, do you want to update the phone number?")) {
+        personService
+          .update(newPerson, check.id)
+          .then(data => {
+            setPersons(persons.map(p => p.id === check.id ? data : p));
+          });
+      }
     } else {
       personService
         .create(newPerson)
@@ -47,16 +54,18 @@ function App() {
   }
 
   const deletePerson = id => {
-    personService
-      .del(id)
-      .then(data => {
-        setPersons(persons.filter(p => p.id !== id));
-      })
+    if (window.confirm(`Do you want to delete ${persons.filter(p => p.id === id)[0].name} from your phonebook?`)) {
+      personService
+        .del(id)
+        .then(data => {
+          setPersons(persons.filter(p => p.id !== id));
+        })
+    } 
   }
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
       <Filter 
         handleChange={handleChange}
         setSearch={setSearch}
