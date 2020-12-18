@@ -1,13 +1,21 @@
 import React from 'react';
 import Person from './Person';
 
-const Persons = ({ persons, search }) => {
+const Persons = ({ persons, search, handleClick }) => {
   const display = () => {
     if (search !== "") {
       return persons.filter(p => p.name.toLowerCase().includes(search.toLowerCase()))
-        .map(p => (<Person key={p.id} person={p}/>));
+        .map(p => <Person 
+          key={p.id} 
+          person={p}
+          handleClick={() => handleClick(p.id)}
+        />);
     } else {
-      return persons.map(p => (<Person key={p.id} person={p}/>));
+      return persons.map(p => <Person 
+        key={p.id} 
+        person={p}
+        handleClick={() => handleClick(p.id)}
+      />);
     }
   }
   return (

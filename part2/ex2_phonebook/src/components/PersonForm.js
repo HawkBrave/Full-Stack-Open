@@ -1,20 +1,7 @@
 import React from 'react';
 
-const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, setPersons, handleChange}) => {
-  const addPerson = (event) => {
-    event.preventDefault();
-    const newPerson = {
-      name: newName,
-      number: newNumber
-    };
-    if (persons.includes(...persons.filter(p => p.name === newPerson.name))) {
-      alert('no');
-    } else {
-      setPersons(persons.concat(newPerson))
-    }
-    setNewName('');
-    setNewNumber('');
-  }
+const PersonForm = ({ addPerson, newName, setNewName, newNumber, setNewNumber, handleChange }) => {
+  
   return (
     <form onSubmit={addPerson}>
       <div>
