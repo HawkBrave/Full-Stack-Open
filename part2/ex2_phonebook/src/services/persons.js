@@ -1,30 +1,33 @@
-const baseUrl = 'http://localhost:3001/persons';
+const baseUrl = 'http://localhost:3002/api/persons';
 
 const getAll = async () => {
-  return await fetch(baseUrl)
-    .then(res => res.json());
+  const response = await fetch(baseUrl);
+  return response.json();
 }
 
-const create = async body => {
-  return await fetch(baseUrl, {
+const create = async (body) => {
+  const response = await fetch(baseUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
-  }).then(res => res.json());
+  });
+  return response.json();
 }
 
 const update = async (body, id) => {
-  return await fetch(`${baseUrl}/${id}`, {
+  const response = await fetch(`${baseUrl}/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
-  }).then(res => res.json());
+  });
+  return response.json();
 }
 
-const del = async id => {
-  return await fetch(`${baseUrl}/${id}`, {
+const del = async (id) => {
+  const response = await fetch(`${baseUrl}/${id}`, {
     method: 'DELETE'
-  }).then(res => res.json());
+  });
+  return response;
 }
 
 export default {
